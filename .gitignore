@@ -11,11 +11,11 @@
 /export_system_service/target/
 /export_web_manager/target/
 /export_web_portal/target/
-/export_cargo_service/src/main/resources/spring/
 /.idea/
 *.iml
-/export_company_service/src/main/resources/spring/
-/export_mq_consumer/src/main/resources/
-/export_dao/src/main/resources/properties/
-/export_stat_service/src/main/resources/spring/
-/export_web_manager/src/main/resources/
+#/export_company_service/src/main/resources/spring/
+#/export_mq_consumer/src/main/resources/
+#/export_dao/src/main/resources/properties/
+#/export_stat_service/src/main/resources/spring/
+#/export_web_manager/src/main/resources/
+#/export_cargo_service/src/main/resources/spring/
