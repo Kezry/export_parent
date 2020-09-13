@@ -2,13 +2,6 @@
 
 
 
-克隆完成代码之后，请在IDEA底部的Terminal中运行下面两行代码
-
-```
-git rm -r --cached .
-git add .
-```
-
 
 
 ------
