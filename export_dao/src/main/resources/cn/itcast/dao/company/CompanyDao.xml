@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--名称空间：接口的全类名-->
+<mapper namespace="cn.itcast.dao.company.CompanyDao">
+
+
+    <!--由于数据库表的字段名与实体类的属性名不对应，所以我们可以编写一个结果集-->
+    <resultMap id="BaseResultMap" type="Company">
+        <!--主键列   column： 数据库表列名   property 实体类的属性名-->
+        <id     property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="expirationDate" column="expiration_date"/>
+        <result property="address" column="address"/>
+        <result property="licenseId" column="license_id"/>
+        <result property="representative" column="representative"/>
+        <result property="phone" column="phone"/>
+        <result property="companySize" column="company_size"/>
+        <result property="industry" column="industry"/>
+        <result property="remarks" column="remarks"/>
+        <result property="state" column="state"/>
+        <result property="balance" column="balance"/>
+        <result property="city" column="city"/>
+    </resultMap>
+
+
+
+
+    <!--查找所有的企业 ,  注意： 如果使用结果集，select标签需要使用ResultMap而不是ResultType-->
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from ss_company
+    </select>
+
+
+    <!--//新增企业-->
+    <!--void save(Company company);-->
+    <insert id="save">
+      insert into ss_company values(
+            #{id},
+            #{name},
+            #{expirationDate},
+            #{address},
+            #{licenseId},
+            #{representative},
+            #{phone},
+            #{companySize},
+            #{industry},
+            #{remarks},
+            #{state},
+            #{balance},
+            #{city}
+          );
+    </insert>
+
+
+   <!-- //更新企业
+    void update(Company company);-->
+    <update id="update">
+        update ss_company SET
+            name=#{name},
+            expiration_date=#{expirationDate},
+            address=#{address},
+            license_id=#{licenseId},
+            representative=#{representative},
+            phone=#{phone},
+            company_size=#{companySize},
+            industry=#{industry},
+            remarks=#{remarks},
+            state=#{state},
+            balance=#{balance},
+            city=#{city}
+        where id = #{id}
+    </update>
+
+  <!--  //根据id查找企业
+    Company findById(String id);-->
+    <select id="findById" resultMap="BaseResultMap">
+        select * from ss_company where id = #{id}
+    </select>
+
+    <!--根据id删除企业-->
+    <delete id="delete">
+        delete from ss_company where id = #{id}
+    </delete>
+    
+    
+</mapper>

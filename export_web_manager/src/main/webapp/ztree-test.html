@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--1. 引入js与css文件-->
+    <link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="/plugins/ztree/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.excheck-3.5.js"></script>
+
+
+    <script>
+    //3. 定义一个全局参数
+    var setting = {
+        check: {
+            enable: true    //复选框是否要可选
+        },
+        data: {
+            simpleData: {
+                enable: true   // 是否要展示成树形结构
+            }
+        }
+    };
+
+    //4. 定义树结构数据
+
+    var zNodes =[
+        { id:1, pId:0, name:"saas管理", open:true},
+        { id:11, pId:1, name:"企业管理"},
+        { id:111, pId:1, name:"模块管理"}
+    ];
+
+
+    //让页面加载完毕，然后再去查找ul标签
+    $(function(){
+        //5. 使用全局参数、树结构数据、html元素组合成一颗树
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+
+    </script>
+</head>
+<body>
+
+    <!--2. 定义一个区域展示树-->
+    <ul id="treeDemo" class="ztree"></ul>
+
+</body>
+</html>

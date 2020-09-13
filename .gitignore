@@ -1,0 +1,13 @@
+# Project exclude paths
+/export_cargo_interface/target/
+/export_cargo_service/target/
+/export_company_interface/target/
+/export_company_service/target/
+/export_dao/target/
+/export_domain/target/
+/export_mq_consumer/target/
+/export_stat_interface/target/
+/export_stat_service/target/
+/export_system_service/target/
+/export_web_manager/target/
+/export_web_portal/target/
