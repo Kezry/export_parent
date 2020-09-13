@@ -18,4 +18,4 @@
 /export_mq_consumer/src/main/resources/
 /export_dao/src/main/resources/properties/
 /export_stat_service/src/main/resources/spring/
-#/export_web_manager/src/main/resources/
+/export_web_manager/src/main/resources/
