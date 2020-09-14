@@ -56,116 +56,165 @@
             alert("请勾选待处理的记录，且每次只能勾选一个")
         }
     }
+
+    /*
+        生成装箱单按钮点击事件函数
+     */
+    function createPacking() {
+        //判断是否选中
+        let length = $("input[name=id]:checked").length;
+        if (length == 0) {
+            alert("请勾选要生成装箱单的合同");
+        } else {
+            //获取选中的报运单id(可能有多个)
+            let ids = new Array();
+            $("input[name=id]:checked").each(function () {
+                ids.push($(this).val());
+            });
+            //异步请求
+            $.ajax({
+                method: "get",
+                url: "/cargo/export/createPacking.do",
+                data: {"ids": ids},
+                traditional: true,
+                dataType: "text",
+                success:function (result) {
+                    /*
+                        返回值result的三种情况说明:
+                        0 --> 存在未报运的合同
+                        1 --> 多个报运单的装运港、目的港、收货人不一致
+                        2 --> 一切正常
+                     */
+                    if (result == "0") {
+                        alert("错误提示：已报运的合同才能生成装箱单");
+                    }else if (result == "1") {
+                        location.href = "/cargo/packing/toError.do";
+                    }else if (result == "2") {
+                        ids = ids.join(",");
+                        location.href = "/cargo/packing/toAdd.do?ids="+ids;
+                    }
+                }
+            });
+        }
+    }
+
+    $(function () {
+        $("#checkAll").click(function () {
+            $("input[name=id]").prop("checked", $(this).prop("checked"));
+        });
+    })
 </script>
 <body>
 <div id="frameContent" class="content-wrapper" style="margin-left:0px;">
-<section class="content-header">
-    <h1>
-        货运管理
-        <small>出口报运</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
-    </ol>
-</section>
-<!-- 内容头部 /-->
+    <section class="content-header">
+        <h1>
+            货运管理
+            <small>出口报运</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+        </ol>
+    </section>
+    <!-- 内容头部 /-->
 
-<!-- 正文区域 -->
-<section class="content">
+    <!-- 正文区域 -->
+    <section class="content">
 
-    <!-- .box-body -->
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">报运单列表</h3>
-        </div>
+        <!-- .box-body -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">报运单列表</h3>
+            </div>
 
-        <div class="box-body">
+            <div class="box-body">
 
-            <!-- 数据表格 -->
-            <div class="table-box">
+                <!-- 数据表格 -->
+                <div class="table-box">
 
-                <!--工具栏-->
-                <div class="pull-left">
-                    <div class="form-group form-inline">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" title="删除" onclick='deleteById()'><i class="fa fa-trash-o"></i> 删除</button>
-                            <button type="button" class="btn btn-default" title="提交" onclick='submit()'><i class="fa fa-file-o"></i> 提交</button>
-                            <button type="button" class="btn btn-default" title="取消" onclick='cancel()'><i class="fa fa-file-o"></i> 取消</button>
-                            <button type="button" class="btn btn-default" title="电子报运" onclick="exportE()"><i class="fa fa-refresh"></i> 电子报运</button>
+                    <!--工具栏-->
+                    <div class="pull-left">
+                        <div class="form-group form-inline">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" title="删除" onclick='deleteById()'><i class="fa fa-trash-o"></i> 删除</button>
+                                <button type="button" class="btn btn-default" title="提交" onclick='submit()'><i class="fa fa-file-o"></i> 提交</button>
+                                <button type="button" class="btn btn-default" title="取消" onclick='cancel()'><i class="fa fa-file-o"></i> 取消</button>
+                                <button type="button" class="btn btn-default" title="电子报运" onclick="exportE()"><i class="fa fa-refresh"></i> 电子报运</button>
+                                <button type="button" class="btn btn-default" title="生成装箱单" onclick="createPacking()"><i class="fa fa-refresh"></i> 生成装箱单</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="box-tools pull-right">
-                    <div class="has-feedback">
-                        <input type="text" class="form-control input-sm" placeholder="搜索">
-                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback">
+                            <input type="text" class="form-control input-sm" placeholder="搜索">
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
                     </div>
-                </div>
-                <!--工具栏/-->
+                    <!--工具栏/-->
 
-                <!--数据列表-->
-                <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
-                    <thead>
-                    <tr>
-                        <td><input type="checkbox" name="selid" onclick="checkAll('id',this)"></td>
-                        <th class="sorting">报运号</th>
-                        <th class="sorting">货物/附件</th>
-                        <th class="sorting">信用证号</th>
-                        <th class="sorting">收货地址</th>
-                        <th class="sorting">装运港</th>
-                        <th class="sorting">目的港</th>
-                        <th class="sorting">运输方式</th>
-                        <th class="sorting">价格条件</th>
-                        <th class="sorting">状态</th>
-                        <th class="text-center">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${pageInfo.list}" var="o" varStatus="status">
-                        <tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-                            <td><input type="checkbox" name="id" value="${o.id}"/></td>
-                            <td>${o.id}</td>
-                            <td align="center">
-                                ${o.proNum}/${o.extNum}
-                            </td>
-                            <td>${o.lcno}</td>
-                            <td>${o.consignee}</td>
-                            <td>${o.shipmentPort}</td>
-                            <td>${o.destinationPort}</td>
-                            <td>${o.transportMode}</td>
-                            <td>${o.priceCondition}</td>
-                            <td>
-                                <c:if test="${o.state==0}">草稿</c:if>
-                                <c:if test="${o.state==1}"><font color="green">已上报</font></c:if>
-                                <c:if test="${o.state==2}"><font color="red">已报运</font></c:if>
-                            </td>
-                            <td>
-                                <a href="${ctx }/cargo/export/toView.do?id=${o.id}">[查看]</a>
-                                <a href="${ctx }/cargo/export/toUpdate.do?id=${o.id}">[编辑]</a>
-                                <c:if test="${o.state==2}">
-                                    <a href="/cargo/export/exportPdf.do?id=${o.id}">[下载]</a>
-                                </c:if>
-                            </td>
+                    <!--数据列表-->
+                    <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+                        <thead>
+                        <tr>
+                            <td><input type="checkbox" id="checkAll" name="selid" onclick="checkAll('id',this)"></td>
+                            <th class="sorting">报运号</th>
+                            <th class="sorting">货物/附件</th>
+                            <th class="sorting">信用证号</th>
+                            <th class="sorting">收货地址</th>
+                            <th class="sorting">装运港</th>
+                            <th class="sorting">目的港</th>
+                            <th class="sorting">运输方式</th>
+                            <th class="sorting">价格条件</th>
+                            <th class="sorting">状态</th>
+                            <th class="text-center">操作</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${pageInfo.list}" var="o" varStatus="status">
+                            <tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
+                                <td><input type="checkbox" name="id" value="${o.id}"/></td>
+                                <td>${o.id}</td>
+                                <td align="center">
+                                        ${o.proNum}/${o.extNum}
+                                </td>
+                                <td>${o.lcno}</td>
+                                <td>${o.consignee}</td>
+                                <td>${o.shipmentPort}</td>
+                                <td>${o.destinationPort}</td>
+                                <td>${o.transportMode}</td>
+                                <td>${o.priceCondition}</td>
+                                <td>
+                                    <c:if test="${o.state==0}">草稿</c:if>
+                                    <c:if test="${o.state==1}"><font color="green">已上报</font></c:if>
+                                    <c:if test="${o.state==2}"><font color="red">已报运</font></c:if>
+                                    <c:if test="${o.state==3}"><font color="blue">已装箱</font></c:if>
+                                </td>
+                                <td>
+                                    <a href="${ctx }/cargo/export/toView.do?id=${o.id}">[查看]</a>
+                                    <a href="${ctx }/cargo/export/toUpdate.do?id=${o.id}">[编辑]</a>
+                                    <c:if test="${o.state==2}">
+                                        <a href="/cargo/export/exportPdf.do?id=${o.id}">[下载]</a>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <!-- /.box-body -->
+
+            <!-- .box-footer-->
+            <div class="box-footer">
+                <jsp:include page="../../common/page.jsp">
+                    <jsp:param value="/cargo/export/list.do" name="pageUrl"/>
+                </jsp:include>
+            </div>
+            <!-- /.box-footer-->
+
+
         </div>
-        <!-- /.box-body -->
 
-        <!-- .box-footer-->
-        <div class="box-footer">
-            <jsp:include page="../../common/page.jsp">
-                <jsp:param value="cargo/contract/list.do" name="pageUrl"/>
-            </jsp:include>
-        </div>
-        <!-- /.box-footer-->
-
-
-    </div>
-
-</section>
+    </section>
 </div>
 </body>
 

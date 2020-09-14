@@ -10,10 +10,10 @@
     <dubbo:application name="export_company_service"/>
 
     <!--2.注册中心地址与端口-->
-    <dubbo:registry address="zookeeper://172.20.40.100" port="2181"/>
+    <dubbo:registry address="zookeeper://192.168.2.3" port="2181"/>
 
     <!--3.协议与端口-->
-    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:protocol name="dubbo" port="20882"/>
 
 
     <!--4. 包扫描-->
