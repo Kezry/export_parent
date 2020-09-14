@@ -78,14 +78,14 @@ public class ContractServiceImpl implements ContractService {
         List<Contract> contractList = contractDao.findByDeptId(companyId,deptId);
         return new PageInfo<>(contractList);
     }
-
+   //删除货物
     @Override
     public void deleteCargo(String id) {
         contractDao.deleteCargo(id);
     }
-
+   //删除附件
     @Override
-    public void deleteaAccessory(String id) {
-        contractDao.deleteaAccessory(id);
+    public void deleteAccessory(String id) {
+        contractDao.deleteAccessory(id);
     }
 }

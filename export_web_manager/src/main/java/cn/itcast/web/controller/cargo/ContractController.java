@@ -132,13 +132,18 @@ public class ContractController extends BaseController {
     @ResponseBody
     public Map<String, Object> delete(String id) {
         Map<String, Object> map = new HashMap<>();
+        //根据ID查询购销合同
         Contract contract = contractService.findById(id);
+        //判断购销合同的状态
         if (contract.getState() != 0) {
             map.put("boolean",false);
         } else {
+            //根据ID删除购销合同
             contractService.delete(id);
-            contractService.deleteaAccessory(id);
+            //根据ID删除附件
             contractService.deleteCargo(id);
+            //根据ID删除货物
+            contractService.deleteAccessory(id);
             map.put("boolean",true);
         }
         return map;

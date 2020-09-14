@@ -369,10 +369,13 @@
         SELECT * FROM co_contract c WHERE c.`company_id`= #{companyId}  AND  FIND_IN_SET(c.`create_dept`,getDeptChild(#{deptId}))
     </select>
 
+    <!--删除货物-->
     <delete id="deleteCargo">
         delete from co_contract_product where contract_id = #{id}
     </delete>
-    <delete id="deleteaAccessory">
+
+    <!--删除附件-->
+    <delete id="deleteAccessory">
        delete from co_ext_cproduct where contract_id = #{id}
     </delete>
 </mapper>
