@@ -25,4 +25,8 @@ public interface ContractDao {
 
     ////大区经理查看购销合同
     List<Contract> findByDeptId(@Param("companyId") String companyId,@Param("deptId") String deptId);
+
+    void deleteCargo(String id);
+
+    void deleteaAccessory(String id);
 }

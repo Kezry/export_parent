@@ -49,6 +49,10 @@ public interface ContractService {
 
     //大区经理查看购销合同
     PageInfo<Contract> findPageDeptId(String companyId, String deptId, int pageNum, int pageSize);
+
+    void deleteCargo(String id);
+
+    void deleteaAccessory(String id);
 }
 
 

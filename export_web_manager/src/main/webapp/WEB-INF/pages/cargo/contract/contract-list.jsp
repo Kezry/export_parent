@@ -24,9 +24,24 @@
         if(id) {
             if(confirm("你确认要删除此条记录吗？")) {
                 location.href="${ctx}/cargo/contract/delete.do?id="+id;
+                $.ajax({
+                    url:"${ctx}/cargo/contract/delete.do?id="+id,
+                    type:"get",
+                    dataType:"json",
+                    success:function (result) {
+                       if (result.boolean){
+                           alert("删除成功!");
+                           window.location.reload();
+                       }else {
+                           alert("该购销合同已提交,不能删除!");
+                           window.location.reload();
+                       }
+                    }
+                });
             }
         }else{
-            alert("请勾选待处理的记录，且每次只能勾选一个")
+            alert("请勾选待处理的记录，且每次只能勾选一个");
+            window.location.reload();
         }
     }
 

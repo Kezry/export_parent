@@ -368,4 +368,11 @@
     <select id="findByDeptId" resultMap="BaseResultMap">
         SELECT * FROM co_contract c WHERE c.`company_id`= #{companyId}  AND  FIND_IN_SET(c.`create_dept`,getDeptChild(#{deptId}))
     </select>
+
+    <delete id="deleteCargo">
+        delete from co_contract_product where contract_id = #{id}
+    </delete>
+    <delete id="deleteaAccessory">
+       delete from co_ext_cproduct where contract_id = #{id}
+    </delete>
 </mapper>

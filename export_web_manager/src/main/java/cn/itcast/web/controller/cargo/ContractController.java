@@ -36,7 +36,7 @@ public class ContractController extends BaseController {
      */
 
     @RequestMapping("/list")
-    public  String list(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize){
+    public String list(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize) {
         ContractExample contractExample = new ContractExample();
         //在逆向工程中如果需要根据时间排序 ， 不是条件所以不需要创建Criteria对象
         contractExample.setOrderByClause("create_time desc");
@@ -46,26 +46,26 @@ public class ContractController extends BaseController {
         User loginUser = getLoginUser();
         //得到登陆者的等级
         Integer degree = loginUser.getDegree();
-        if(degree==4){
+        if (degree == 4) {
             //普通员工
             criteria.andCreateByEqualTo(loginUser.getId());
 
-        }else if (degree==3){
+        } else if (degree == 3) {
             //部门经理
             criteria.andCreateDeptEqualTo(loginUser.getDeptId());
-        }else if(degree==2){
+        } else if (degree == 2) {
             //大区经理
             PageInfo<Contract> pageInfo =
-                    contractService.findPageDeptId(loginUser.getCompanyId(),loginUser.getDeptId(), pageNum, pageSize);
-            request.setAttribute("pageInfo",pageInfo);
+                    contractService.findPageDeptId(loginUser.getCompanyId(), loginUser.getDeptId(), pageNum, pageSize);
+            request.setAttribute("pageInfo", pageInfo);
             return "cargo/contract/contract-list";
-        }else if(degree==1){
+        } else if (degree == 1) {
             //系统管理员
             criteria.andCompanyIdEqualTo(loginUser.getCompanyId());
         }
 
         PageInfo<Contract> pageInfo = contractService.findByPage(contractExample, pageNum, pageSize);
-        request.setAttribute("pageInfo",pageInfo);
+        request.setAttribute("pageInfo", pageInfo);
         return "cargo/contract/contract-list";
     }
 
@@ -76,10 +76,9 @@ public class ContractController extends BaseController {
     参数： 无
    */
     @RequestMapping("/toAdd")
-    public  String toAdd(){
+    public String toAdd() {
         return "cargo/contract/contract-add";
     }
-
 
 
     /*
@@ -89,7 +88,7 @@ public class ContractController extends BaseController {
       返回值：购销合同列表页面
      */
     @RequestMapping("/edit")
-    public  String edit(Contract contract){
+    public String edit(Contract contract) {
         //补全购销合同信息
         String companyId = getLoginCompanyId();
         String companyName = getLoginCompanyName();
@@ -99,14 +98,13 @@ public class ContractController extends BaseController {
         contract.setCreateBy(getLoginUser().getId()); //登陆者的id
         contract.setCreateDept(getLoginUser().getDeptId()); //登陆者所属的购销合同
 
-        if(StringUtils.isEmpty(contract.getId())){
+        if (StringUtils.isEmpty(contract.getId())) {
             contractService.save(contract);
-        }else{
+        } else {
             contractService.update(contract);
         }
         return "redirect:/cargo/contract/list.do";  //添加redirect开头的返回值则不会经过视图解析器
     }
-
 
 
     /*
@@ -116,13 +114,12 @@ public class ContractController extends BaseController {
     返回值：购销合同更新页面
    */
     @RequestMapping("/toUpdate")
-    public  String toUpdate(String id){
+    public String toUpdate(String id) {
         //1.根据id查询当前购销合同信息
         Contract contract = contractService.findById(id);
-        request.setAttribute("contract",contract);
+        request.setAttribute("contract", contract);
         return "cargo/contract/contract-update";
     }
-
 
 
     /*
@@ -132,11 +129,20 @@ public class ContractController extends BaseController {
     返回值：购销合同列表页面
    */
     @RequestMapping("/delete")
-    public String delete(String id) {
-        contractService.delete(id);
-        return "redirect:/cargo/contract/list.do";
+    @ResponseBody
+    public Map<String, Object> delete(String id) {
+        Map<String, Object> map = new HashMap<>();
+        Contract contract = contractService.findById(id);
+        if (contract.getState() != 0) {
+            map.put("boolean",false);
+        } else {
+            contractService.delete(id);
+            contractService.deleteaAccessory(id);
+            contractService.deleteCargo(id);
+            map.put("boolean",true);
+        }
+        return map;
     }
-
 
 
     /*
@@ -148,10 +154,9 @@ public class ContractController extends BaseController {
     @RequestMapping("/toView")
     public String toView(String id) {
         Contract contract = contractService.findById(id);
-        request.setAttribute("contract",contract);
+        request.setAttribute("contract", contract);
         return "cargo/contract/contract-view";
     }
-
 
 
     /*

@@ -78,4 +78,14 @@ public class ContractServiceImpl implements ContractService {
         List<Contract> contractList = contractDao.findByDeptId(companyId,deptId);
         return new PageInfo<>(contractList);
     }
+
+    @Override
+    public void deleteCargo(String id) {
+        contractDao.deleteCargo(id);
+    }
+
+    @Override
+    public void deleteaAccessory(String id) {
+        contractDao.deleteaAccessory(id);
+    }
 }
