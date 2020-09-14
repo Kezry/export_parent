@@ -274,4 +274,19 @@ public class ExportController extends BaseController {
         JasperExportManager.exportReportToPdfStream(jasperPrint,response.getOutputStream());
     }
 
+    @RequestMapping("/createPacking")
+    @ResponseBody
+    public String createPacking(String[] ids){
+        //1.判断选中的合同是否已报运
+        if (exportService.isExported(ids)) {
+            //2.判断多个已报运合同的装运港(shipmentPort)、目的港(destinationPort)、收货人(consignee)是否一致
+            if (exportService.isSameSDC(ids)) {
+                return "2";
+            }else {
+                return "1";
+            }
+        }
+        return "0";
+    }
+
 }
