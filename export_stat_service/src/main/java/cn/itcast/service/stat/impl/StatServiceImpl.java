@@ -29,4 +29,25 @@ public class StatServiceImpl implements StatService {
     public List<Map<String, Object>> getOnlineData() {
         return statDao.getOnlineData();
     }
+
+    /**
+     * 获取所有厂家的地址
+     *
+     * @return
+     */
+    @Override
+    public List<String> getAllAddress() {
+        return statDao.getAllAddress();
+    }
+
+    /**
+     * 按所在地统计指定生产类型的厂家数量
+     *
+     * @param ctype 厂家生产类型
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> getAddressData(String ctype) {
+        return statDao.getAddressData(ctype);
+    }
 }

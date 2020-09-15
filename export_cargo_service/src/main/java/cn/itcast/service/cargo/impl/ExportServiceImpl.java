@@ -223,7 +223,7 @@ public class ExportServiceImpl implements ExportService {
     @Override
     public boolean isSameSDC(String[] ids) {
         //获取查询出的SDCVo个数
-        int count = exportDao.getSDCVoByIds(ids).size();
+        int count = exportDao.getLSDCTVoByIds(ids).size();
         if (count == 1) {
             return true;
         }

@@ -2,7 +2,7 @@ package cn.itcast.dao.cargo;
 
 import cn.itcast.domain.cargo.Export;
 import cn.itcast.domain.cargo.ExportExample;
-import cn.itcast.vo.SDCVo;
+import cn.itcast.vo.LSDCTVo;
 
 import java.util.List;
 
@@ -38,5 +38,5 @@ public interface ExportDao {
      * @param ids 报运单id数组
      * @return
      */
-    List<SDCVo> getSDCVoByIds(String[] ids);
+    List<LSDCTVo> getLSDCTVoByIds(String[] ids);
 }

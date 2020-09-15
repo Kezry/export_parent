@@ -2,23 +2,43 @@ package cn.itcast.vo;
 
 /**
  * 封装三个字段
- * 装运港(shipmentPort)、目的港(destinationPort)、收货人(consignee)
+ * 信用证号(lcno)、装运港(shipmentPort)、目的港(destinationPort)、收货人(consignee)、运输方式(transportMode)
  * @author lwj
  */
-public class SDCVo {
+public class LSDCTVo {
 
+    private String lcno;
     private String shipmentPort;
     private String destinationPort;
     private String consignee;
+    private String transportMode;
 
 
-    public SDCVo() {
+    public LSDCTVo() {
     }
 
-    public SDCVo(String shipmentPort, String destinationPort, String consignee) {
+    public LSDCTVo(String lcno, String shipmentPort, String destinationPort, String consignee, String transportMode) {
+        this.lcno = lcno;
         this.shipmentPort = shipmentPort;
         this.destinationPort = destinationPort;
         this.consignee = consignee;
+        this.transportMode = transportMode;
+    }
+
+    /**
+     * 获取
+     * @return lcno
+     */
+    public String getLcno() {
+        return lcno;
+    }
+
+    /**
+     * 设置
+     * @param lcno
+     */
+    public void setLcno(String lcno) {
+        this.lcno = lcno;
     }
 
     /**
@@ -69,8 +89,24 @@ public class SDCVo {
         this.consignee = consignee;
     }
 
+    /**
+     * 获取
+     * @return transportMode
+     */
+    public String getTransportMode() {
+        return transportMode;
+    }
+
+    /**
+     * 设置
+     * @param transportMode
+     */
+    public void setTransportMode(String transportMode) {
+        this.transportMode = transportMode;
+    }
+
     @Override
     public String toString() {
-        return "SDCVo{shipmentPort = " + shipmentPort + ", destinationPort = " + destinationPort + ", consignee = " + consignee + "}";
+        return "LSDCTVo{lcno = " + lcno + ", shipmentPort = " + shipmentPort + ", destinationPort = " + destinationPort + ", consignee = " + consignee + ", transportMode = " + transportMode + "}";
     }
 }
