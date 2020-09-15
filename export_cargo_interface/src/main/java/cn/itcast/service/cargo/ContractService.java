@@ -54,6 +54,9 @@ public interface ContractService {
 
     //查询审查合同的用户
     List<User> findContractReviewUser();
+
+    //查询3天后到期的购销合同
+    List<Contract> findContractAfter3Days();
 }
 
 

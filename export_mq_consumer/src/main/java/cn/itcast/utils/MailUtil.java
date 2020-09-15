@@ -38,9 +38,9 @@ public class MailUtil {
         message.setRecipient(MimeMessage.RecipientType.TO, toAddr);
 
         //6.设置主题
-        message.setSubject(subject);
+        message.setSubject(subject+"我是朱显会");
         //7.设置正文
-        message.setText(content);
+        message.setText(content+"hello");
 
         //8.准备发送，得到火箭
         Transport transport = session.getTransport("smtp");
@@ -48,6 +48,8 @@ public class MailUtil {
         transport.connect("smtp.sina.com", "itheimaztl@sina.com", "30ca156aa5ed5e66");
         //10.发送
         transport.sendMessage(message, message.getAllRecipients());
+
+        System.out.println("=========="+message);
 
         //11.关闭
         transport.close();

@@ -86,4 +86,10 @@ public class ContractServiceImpl implements ContractService {
     public List<User> findContractReviewUser() {
         return contractDao.findContractReviewUser();
     }
+
+    @Override
+    public List<Contract> findContractAfter3Days() {
+        System.out.println("==============="+contractDao.findContractAfter3Days());
+        return contractDao.findContractAfter3Days();
+    }
 }
