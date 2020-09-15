@@ -4,6 +4,7 @@ import cn.itcast.domain.system.Module;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -56,6 +57,8 @@ public class AuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        //检查是否使用缓存
+        System.out.println("-=========================================================================第一次加载，未使用缓存===============");
         //1. 得到登陆成功用户对象
         User user = (User) principals.getPrimaryPrincipal();
         //2. 得到用户拥有的权限
@@ -69,5 +72,12 @@ public class AuthRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
+    /**
+     * 清空已经放入缓存的授权信息。
+     * */
+    public void clearCache() {
+        PrincipalCollection principals= SecurityUtils.getSubject().getPrincipals();
+        super.clearCache(principals);
+    }
 
 }
