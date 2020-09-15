@@ -21,4 +21,14 @@
         (SELECT DATE_FORMAT(l.time,'%H') h , COUNT(*) num FROM st_sys_log l GROUP BY DATE_FORMAT(l.time,'%H')) temp ON i.`A1`=temp.h
    </select>
 
+    <!--按所在地统计指定生产类型的厂家数量-->
+    <select id="getAddressData" resultType="java.util.Map">
+        SELECT f.`address` name,COUNT(*) value FROM co_factory f WHERE f.`ctype`=#{ctype} GROUP BY f.`address`
+    </select>
+
+    <!--获取所有厂家的地址-->
+    <select id="getAllAddress" resultType="java.lang.String">
+        SELECT DISTINCT address FROM co_factory
+    </select>
+
 </mapper>
