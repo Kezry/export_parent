@@ -21,7 +21,7 @@
     <!--2 doubbo配置-->
     <dubbo:application name="export_web_portal"/>
 
-    <dubbo:registry address="zookeeper://192.168.20.128" port="2181"/>
+    <dubbo:registry address="zookeeper://172.20.40.100" port="2181"/>
 
     <dubbo:annotation package="cn.itcast.controller"/>
 
