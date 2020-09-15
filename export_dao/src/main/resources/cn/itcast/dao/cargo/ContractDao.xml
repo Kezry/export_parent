@@ -379,4 +379,14 @@
         SELECT u.`user_name` FROM pe_user u INNER JOIN pe_role_user ru ON u.`user_id`=ru.`user_id` WHERE ru.`role_id`='4028a1cd4ee2d9d6014ee2df4c6a0009'
     </select>
 
+
+    <!--删除货物-->
+    <delete id="deleteCargo">
+        delete from co_contract_product where contract_id = #{id}
+    </delete>
+
+    <!--删除附件-->
+    <delete id="deleteAccessory">
+       delete from co_ext_cproduct where contract_id = #{id}
+    </delete>
 </mapper>

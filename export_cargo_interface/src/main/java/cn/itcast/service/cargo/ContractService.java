@@ -54,6 +54,12 @@ public interface ContractService {
 
     //查询审查合同的用户
     List<User> findContractReviewUser();
+
+    //删除货物
+    void deleteCargo(String id);
+    //删除附件
+    void deleteAccessory(String id);
+
 }
 
 
