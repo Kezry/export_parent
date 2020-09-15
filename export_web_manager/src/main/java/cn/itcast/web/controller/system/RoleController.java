@@ -196,7 +196,9 @@ public class RoleController extends BaseController {
     @RequestMapping("/updateRoleModule")
     public  String updateRoleModule(String roleid,String[] moduleIds){
         System.out.println("=============>"+moduleIds);
-        //roleService.updateRoleModule(roleid,moduleIds);
+
+        //这里有坑，被注释了
+        roleService.updateRoleModule(roleid,moduleIds);
         return "redirect:/system/role/list.do";
     }
 

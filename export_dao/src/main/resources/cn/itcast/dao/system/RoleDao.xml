@@ -71,8 +71,11 @@
     <select id="findUserRoleByUserId" resultMap="BaseResultMap">
       SELECT r.* FROM pe_role_user ru INNER JOIN pe_role r ON ru.`role_id`=r.`role_id` WHERE ru.`user_id`=#{userid}
     </select>
-    
 
+    <!--根据用户id查找角色是否为合同审批员-->
+    <select id="findUserIsRoleByUserId" resultMap="BaseResultMap">
+        SELECT * FROM pe_role_user WHERE role_id="4028a1cd4ee2d9d6014ee2df4c6a0009" AND user_id=#{userid}
+    </select>
 
 
 </mapper>

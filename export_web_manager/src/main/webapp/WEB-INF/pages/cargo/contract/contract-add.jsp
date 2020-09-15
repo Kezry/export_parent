@@ -69,7 +69,13 @@
 
                     <div class="col-md-2 title">审单人</div>
                     <div class="col-md-4 data">
-                        <input type="text" class="form-control" placeholder="审单人" name="checkBy" value="${contract.checkBy}">
+<%--                        <input type="text" class="form-control" placeholder="审单人" name="checkBy" value="${contract.checkBy}">--%>
+                        <select class="form-control" name="checkBy">
+                            <optgroup label="请选择审单人">
+                            <c:forEach items="${contractReviewUser}" var="item">
+                                <option value="${item.userName}">${item.userName}</option>
+                            </c:forEach>
+                        </select>
                     </div>
 
                     <div class="col-md-2 title">验货员</div>

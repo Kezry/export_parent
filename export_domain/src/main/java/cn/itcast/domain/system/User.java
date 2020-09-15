@@ -1,6 +1,8 @@
 package cn.itcast.domain.system;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String id;
     private String deptId;
     private String deptName;

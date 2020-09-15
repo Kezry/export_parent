@@ -31,21 +31,51 @@
     }
 
     function submit() {
-        var id = getCheckId()
+        let id = getCheckId()
         if(id) {
-            location.href="${ctx}/cargo/contract/submit.do?id="+id;
+            if(confirm("确定提交？")) {
+                location.href="${ctx}/cargo/contract/submit.do?id="+id;
+                $.ajax({
+                    url:"${ctx}/cargo/contract/submit.do?id="+id,
+                    type:"get",
+                    success:function (result) {
+                        if (result=="true"){
+                            alert("添加成功!");
+                            window.location.reload();
+                        }else {
+                            alert("请检查是否有添加权限!");
+                            window.location.reload();
+                        }
+                    }
+                });
         }else{
             alert("请勾选待处理的记录，且每次只能勾选一个")
         }
+    }
     }
 
     function cancel() {
         var id = getCheckId()
         if(id) {
-            location.href="${ctx}/cargo/contract/cancel.do?id="+id;
+            if(confirm("确定取消？")) {
+                location.href="${ctx}/cargo/contract/cancel.do?id="+id;
+                $.ajax({
+                    url:"${ctx}/cargo/contract/cancel.do?id="+id,
+                    type:"get",
+                    success:function (result) {
+                        if (result=="true"){
+                            alert("已取消!");
+                            window.location.reload();
+                        }else {
+                            alert("请检查是否有取消权限!");
+                            window.location.reload();
+                        }
+                    }
+                });
         }else{
             alert("请勾选待处理的记录，且每次只能勾选一个")
         }
+    }
     }
 
     function view() {

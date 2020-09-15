@@ -1,6 +1,7 @@
 package cn.itcast.dao.system;
 
 import cn.itcast.domain.system.Role;
+import cn.itcast.domain.system.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,4 +33,8 @@ public interface RoleDao {
 
     //根据用户id查找角色
     List<Role> findUserRoleByUserId(String id);
+
+    //
+    List<Role> findUserIsRoleByUserId(String id);
+
 }

@@ -2,11 +2,13 @@ package cn.itcast.service.system.impl;
 
 import cn.itcast.dao.system.RoleDao;
 import cn.itcast.domain.system.Role;
+import cn.itcast.domain.system.User;
 import cn.itcast.service.system.RoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -70,7 +72,12 @@ public class RoleServiceImpl implements RoleService {
         //1. 先删除当前角色权限
         roleDao.deleteRoleModuleByRoleId(roleid);
         //2. 给当前角色添加权限
+        /**
+         * 修复权限为空时的bug
+         */
+        if (!(moduleIds.toString() == ""||moduleIds==null||moduleIds.length==0)){
         roleDao.addRoleModules(roleid,moduleIds);
+        }
     }
 
 
@@ -79,4 +86,10 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> findUserRoleByUserId(String id) {
         return roleDao.findUserRoleByUserId(id);
     }
+
+    @Override
+    public List<Role> findUserIsRoleByUserId(String id) {
+        return roleDao.findUserIsRoleByUserId(id);
+    }
+
 }
