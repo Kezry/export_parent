@@ -2,6 +2,7 @@ package cn.itcast.dao.cargo;
 
 import cn.itcast.domain.cargo.Export;
 import cn.itcast.domain.cargo.ExportExample;
+import cn.itcast.vo.SDCVo;
 
 import java.util.List;
 
@@ -30,4 +31,12 @@ public interface ExportDao {
      * 更新
      */
     void updateByPrimaryKeySelective(Export record);
+
+    /**
+     * 去重复查询SDCVo[装运港(shipmentPort)、目的港(destinationPort)、收货人(consignee)]
+     *
+     * @param ids 报运单id数组
+     * @return
+     */
+    List<SDCVo> getSDCVoByIds(String[] ids);
 }
