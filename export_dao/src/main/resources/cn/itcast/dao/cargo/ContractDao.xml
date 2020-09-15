@@ -384,4 +384,6 @@
         SELECT * FROM `co_contract` WHERE DATEDIFF(NOW(), `delivery_period`) = -3
     </select>
 
+
+
 </mapper>

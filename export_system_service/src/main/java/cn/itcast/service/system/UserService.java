@@ -31,4 +31,7 @@ public interface UserService {    //ctrl+R
 
     //根据邮箱查找用户
     User findByEmail(String email);
+
+    // <!--根据createBy(用户ID)查询email
+    User findEmailByCreateBY(String createBy);
 }

@@ -60,4 +60,6 @@
     </bean>
 
 
+    <import resource="spring-quartz.xml"/>
+
 </beans>
