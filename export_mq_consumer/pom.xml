@@ -17,11 +17,6 @@
             <artifactId>export_domain</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>cn.itcast</groupId>
-            <artifactId>export_system_service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <!--发送邮件的依赖-->
         <dependency>
             <groupId>javax.mail</groupId>

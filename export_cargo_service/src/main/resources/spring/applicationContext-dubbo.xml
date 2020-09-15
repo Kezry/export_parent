@@ -13,7 +13,7 @@
     <dubbo:registry address="zookeeper://192.168.186.88" port="2181"/>
 
     <!--3.协议与端口-->
-    <dubbo:protocol name="dubbo" port="20881"/>
+    <dubbo:protocol name="dubbo" port="20888"/>
 
 
     <!--4. 包扫描-->
