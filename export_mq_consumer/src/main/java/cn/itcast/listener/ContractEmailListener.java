@@ -29,8 +29,9 @@ public class ContractEmailListener implements MessageListener {
             Integer state = contract.getState();
 
             /*4.获取创建用户邮箱*/
-            /*String email = contract.getEmail();*/
-            String email = "1784756780@qq.com";
+            String email = contract.getEmail();
+
+           /* String email = "1784756780@qq.com";*/
 
             /*5.根据合同状态确定邮件发送内容*/
 
