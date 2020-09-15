@@ -2,6 +2,7 @@ package cn.itcast.service.cargo;
 
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
+import cn.itcast.domain.system.User;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -49,6 +50,10 @@ public interface ContractService {
 
     //大区经理查看购销合同
     PageInfo<Contract> findPageDeptId(String companyId, String deptId, int pageNum, int pageSize);
+
+
+    //查询审查合同的用户
+    List<User> findContractReviewUser();
 }
 
 

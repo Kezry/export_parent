@@ -2,6 +2,7 @@ package cn.itcast.dao.cargo;
 
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
+import cn.itcast.domain.system.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -25,4 +26,8 @@ public interface ContractDao {
 
     ////大区经理查看购销合同
     List<Contract> findByDeptId(@Param("companyId") String companyId,@Param("deptId") String deptId);
+
+
+    //查询审查合同的用户
+    List<User> findContractReviewUser();
 }

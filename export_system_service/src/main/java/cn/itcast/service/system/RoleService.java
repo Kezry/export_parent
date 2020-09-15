@@ -1,6 +1,7 @@
 package cn.itcast.service.system;
 
 import cn.itcast.domain.system.Role;
+import cn.itcast.domain.system.User;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -31,4 +32,8 @@ public interface RoleService {
 
     //根据用户id查找角色
     List<Role> findUserRoleByUserId(String id);
+
+    //
+    List<Role> findUserIsRoleByUserId(String id);
+
 }
