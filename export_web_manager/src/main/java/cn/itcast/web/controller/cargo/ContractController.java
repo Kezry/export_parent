@@ -3,7 +3,6 @@ package cn.itcast.web.controller.cargo;
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
 import cn.itcast.domain.company.Company;
-import cn.itcast.domain.system.Role;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.cargo.ContractService;
 import cn.itcast.service.system.RoleService;
@@ -175,7 +174,7 @@ public class ContractController extends BaseController {
     @RequestMapping("/toView")
     public String toView(String id) {
         Contract contract = contractService.findById(id);
-        request.setAttribute("contract", contract);
+        request.setAttribute("contract",contract);
         return "cargo/contract/contract-view";
     }
 

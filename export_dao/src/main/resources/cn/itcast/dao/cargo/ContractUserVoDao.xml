@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+namespace：命名空间，写成DAO接口的完全限定名：包名.类名
+-->
+<mapper namespace="cn.itcast.dao.cargo.ContractUserVoDao">
+
+    <!--/*查询三天后到期的购销合同和创建用户邮箱*/
+    List<ContractUserVo> findContractsAfter3Days()-->
+
+    <select id="findContractsAfter3Days" resultType="cn.itcast.vo.ContractUserVo">
+        SELECT c.`state` state,u.`email` email FROM `co_contract` c INNER JOIN pe_user u ON c.`create_by` = u.`user_id` WHERE DATEDIFF(NOW(), `delivery_period`) = -3
+    </select>
+</mapper>

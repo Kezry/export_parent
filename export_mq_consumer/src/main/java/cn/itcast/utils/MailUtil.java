@@ -1,7 +1,6 @@
 package cn.itcast.utils;
 
 import javax.mail.Address;
-import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -10,8 +9,6 @@ import java.util.Properties;
 
 /**
  * 电子邮件工具类
- *
- * @author Administrator
  */
 public class MailUtil {
 
@@ -29,7 +26,7 @@ public class MailUtil {
         MimeMessage message = new MimeMessage(session);
 
         //4.设置消息的发送者
-        Address fromAddr = new InternetAddress("itheimaztl@sina.com");
+        Address fromAddr = new InternetAddress("lazybone2020@sina.com");
         message.setFrom(fromAddr);
 
         //5.设置消息的接收者
@@ -45,7 +42,7 @@ public class MailUtil {
         //8.准备发送，得到火箭
         Transport transport = session.getTransport("smtp");
         //9.设置火箭的发射目标
-        transport.connect("smtp.sina.com", "itheimaztl@sina.com", "30ca156aa5ed5e66");
+        transport.connect("smtp.sina.com", "lazybone2020@sina.com", "e7cdfa9e205494e5");
         //10.发送
         transport.sendMessage(message, message.getAllRecipients());
 

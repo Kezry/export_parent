@@ -96,4 +96,13 @@ public class ContractServiceImpl implements ContractService {
     public void deleteAccessory(String id) {
         contractDao.deleteAccessory(id);
     }
+
+
+
+    //查找3天内的（只包含第三天）到期的订单
+    @Override
+    public List<Contract> findContractAfter3Days() {
+        System.out.println("==============="+contractDao.findContractAfter3Days());
+        return contractDao.findContractAfter3Days();
+    }
 }

@@ -91,4 +91,9 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
+
+    @Override
+    public User findEmailByCreateBY(String createBy) {
+        return findEmailByCreateBY(createBy);
+    }
 }

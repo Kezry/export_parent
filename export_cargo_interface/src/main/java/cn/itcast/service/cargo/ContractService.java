@@ -60,6 +60,10 @@ public interface ContractService {
     //删除附件
     void deleteAccessory(String id);
 
+
+
+    //查询3天后到期的购销合同
+    List<Contract> findContractAfter3Days();
 }
 
 

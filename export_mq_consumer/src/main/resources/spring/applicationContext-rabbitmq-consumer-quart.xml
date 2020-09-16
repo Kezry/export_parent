@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
     <!--1. 创建连接工厂-->
-    <rabbit:connection-factory id="connectionFactory" host="192.168.20.128" port="5672" username="ztl" password="123" virtual-host="/itcast"/>
+    <rabbit:connection-factory id="connectionFactory" host="192.168.186.88" port="5672" username="root" password="root" virtual-host="/itcast"/>
 
     <!--2. admin对象管理连接-->
     <rabbit:admin connection-factory="connectionFactory"/>
@@ -15,12 +15,14 @@
 
 
     <!--3.监听器-->
-    <bean id="emailListener" class="cn.itcast.listener.EmailListener"/>
+<!--    <bean id="emailListener" class="cn.itcast.listener.EmailListener"/>-->
+    <bean id="contractemailListener" class="cn.itcast.listener.ContractEmailListener"/>
 
 
     <!--4. 把监听器放入监听器的容器中-->
     <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener ref="emailListener" queue-names="email_queue"/>
+<!--        <rabbit:listener ref="emailListener" queue-names="email_queue"/>-->
+        <rabbit:listener ref="contractemailListener" queue-names="email_queue"/>
     </rabbit:listener-container>
 
 
