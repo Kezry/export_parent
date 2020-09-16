@@ -47,7 +47,7 @@ public class ShippingServiceImpl implements ShippingService {
      */
     @Override
     public void save(Shipping shipping,String id) {
-        shipping.setShippingOrderId(UUID.randomUUID().toString());//委托单编号
+        shipping.setShippingOrderId(id);//委托单编号
         //给生成的委托单添加状态
         shipping.setState(0);
         shippingDao.insertSelective(shipping);
@@ -61,6 +61,10 @@ public class ShippingServiceImpl implements ShippingService {
     @Override
     public void delete(String id) {
         shippingDao.deleteByPrimaryKey(id);
+        //修改装箱单的状态
+        Packing packing = packingDao.selectByPrimaryKey(id);
+        packing.setState(0);
+        packingDao.updateByPrimaryKeySelective(packing);
     }
 
     @Override

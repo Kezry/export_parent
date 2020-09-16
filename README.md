@@ -139,7 +139,7 @@ INSERT  INTO `ss_module`(`module_id`,`parent_id`,`parent_name`,`name`,`layer_num
 
 INSERT  INTO `ss_module`(`module_id`,`parent_id`,`parent_name`,`name`,`layer_num`,`is_leaf`,`ico`,`cpermission`,`curl`,`ctype`,`state`,`belong`,`cwhich`,`quote_num`,`remark`,`order_no`) VALUES 
 
-('209','2','货运管理','合同审核',NULL,NULL,NULL,'合同审核','/cargo/contract/submit.do','1','1','1',NULL,NULL,'cargo',NULL);
+('209','2','货运管理','合同审核',NULL,NULL,NULL,'合同审核','/cargo/contract/checkman.do','1','1','1',NULL,NULL,'cargo',NULL);
 
 
 

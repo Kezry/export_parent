@@ -25,7 +25,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="all-admin-index.html">SaaS外贸出口云平台</a>
+        <a href="${ctx}/home.do">SaaS外贸出口云平台</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">

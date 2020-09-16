@@ -233,4 +233,11 @@ public class ContractController extends BaseController {
         }
         return map;
     }
+
+    @RequestMapping("/checkman")
+    public String checkman(String id) {
+        List contractReviewUser = contractService.findContractReviewUser();
+        request.setAttribute("contractReviewUser", contractReviewUser);
+        return "cargo/contract/checkman";
+    }
 }

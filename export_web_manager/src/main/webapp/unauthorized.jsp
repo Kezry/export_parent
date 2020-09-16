@@ -31,7 +31,7 @@
                 <h3><i class="fa fa-warning text-yellow"></i> Oops! 没有访问权限.</h3>
 
                 <p>
-                    没有访问权限, 你可以 <a href="all-admin-index.html">返回到后台首页</a> 或者通过搜索查询
+                    没有访问权限, 你可以 <a href="${ctx}/home.do">返回到后台首页</a> 或者通过搜索查询
                 </p>
 
                 <form class="search-form">

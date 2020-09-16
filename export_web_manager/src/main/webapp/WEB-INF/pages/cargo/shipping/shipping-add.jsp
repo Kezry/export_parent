@@ -25,7 +25,7 @@
             <small>新增委托书</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="${ctx}/home.do"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li><a href="all-order-manage-list.html">货运管理</a></li>
             <li class="active">新增委托书</li>
         </ol>

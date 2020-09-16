@@ -25,7 +25,7 @@
         </h1>
 
         <ol class="breadcrumb">
-            <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="${ctx}/home.do"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li class="active">500 错误</li>
         </ol>
 
@@ -40,7 +40,7 @@
                 <h3><i class="fa fa-warning text-red"></i> Oops! 页面程序有错误.</h3>
 
                 <p>
-                    你访问的页面发生错误, 你可以 <a href="all-admin-index.html">返回到后台首页</a> 或者
+                    你访问的页面发生错误, 你可以 <a href="${ctx}/home.do">返回到后台首页</a> 或者
                 </p>
                 <p><a href="#" onclick="showDetail();">点击这里查看具体错误消息</a>,
                     <br/>
