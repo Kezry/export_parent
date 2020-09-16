@@ -3,6 +3,7 @@ package cn.itcast.web.controller.cargo;
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
 import cn.itcast.domain.company.Company;
+import cn.itcast.domain.system.Role;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.cargo.ContractService;
 import cn.itcast.service.system.RoleService;
