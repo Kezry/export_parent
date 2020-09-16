@@ -3,18 +3,24 @@ package cn.itcast.web.controller.cargo;
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
 import cn.itcast.domain.company.Company;
+import cn.itcast.domain.system.Role;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.cargo.ContractService;
+import cn.itcast.service.system.RoleService;
 import cn.itcast.web.controller.BaseController;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +32,9 @@ public class ContractController extends BaseController {
 
     @Reference
     private ContractService contractService;
+
+    @Autowired
+    private RoleService roleService;
 
     /*
      url:  /cargo/contract/list.do
@@ -76,9 +85,13 @@ public class ContractController extends BaseController {
     参数： 无
    */
     @RequestMapping("/toAdd")
-    public String toAdd() {
+    public  String toAdd(){
+        //查询审查合同的用户
+        List contractReviewUser = contractService.findContractReviewUser();
+        request.setAttribute("contractReviewUser", contractReviewUser);
         return "cargo/contract/contract-add";
     }
+
 
 
     /*
@@ -107,6 +120,7 @@ public class ContractController extends BaseController {
     }
 
 
+
     /*
     url: /system/Contract/toUpdate.do?id=100
     作用： 进入更新购销合同页面
@@ -120,6 +134,7 @@ public class ContractController extends BaseController {
         request.setAttribute("contract", contract);
         return "cargo/contract/contract-update";
     }
+
 
 
     /*
@@ -150,6 +165,7 @@ public class ContractController extends BaseController {
     }
 
 
+
     /*
       url: /cargo/contract/toView.do?id=4bc7ae89-f02c-4cb0-b74b-ef0e4170adb2
       作用： 查看购销合同
@@ -164,6 +180,7 @@ public class ContractController extends BaseController {
     }
 
 
+
     /*
      url: /cargo/contract/submit.do?id=4bc7ae89-f02c-4cb0-b74b-ef0e4170adb2
      作用： 提交购销合同
@@ -171,11 +188,23 @@ public class ContractController extends BaseController {
      返回值：购销合同列表
 */
     @RequestMapping("/submit")
+    @ResponseBody
     public String submit(String id) {
-        Contract contract = contractService.findById(id);
-        contract.setState(1);
-        contractService.update(contract);
-        return "redirect:/cargo/contract/list.do";
+        String map ;
+        String loginId = getLoginUser().getId();
+        //检查用户是否有审核权限
+        List<Role> userIsRoleByUserId = roleService.findUserIsRoleByUserId(loginId);
+
+        if (!userIsRoleByUserId.isEmpty()) {
+            //审批合同
+            Contract contract = contractService.findById(id);
+            contract.setState(1);
+            contractService.update(contract);
+            map = "true";
+        } else {
+            map = "false";
+        }
+        return map;
     }
 
 
@@ -186,10 +215,22 @@ public class ContractController extends BaseController {
      返回值：购销合同列表
 */
     @RequestMapping("/cancel")
+    @ResponseBody
     public String cancel(String id) {
-        Contract contract = contractService.findById(id);
-        contract.setState(0);
-        contractService.update(contract);
-        return "redirect:/cargo/contract/list.do";
+        String map ;
+        String loginId = getLoginUser().getId();
+        //检查用户是否有审核权限
+        List<Role> userIsRoleByUserId = roleService.findUserIsRoleByUserId(loginId);
+
+        if (!userIsRoleByUserId.isEmpty()) {
+            //审批合同
+            Contract contract = contractService.findById(id);
+            contract.setState(0);
+            contractService.update(contract);
+            map = "true";
+        } else {
+            map = "false";
+        }
+        return map;
     }
 }

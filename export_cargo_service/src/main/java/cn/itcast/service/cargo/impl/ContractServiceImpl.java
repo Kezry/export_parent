@@ -3,6 +3,7 @@ package cn.itcast.service.cargo.impl;
 import cn.itcast.dao.cargo.ContractDao;
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
+import cn.itcast.domain.system.User;
 import cn.itcast.service.cargo.ContractService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
@@ -77,6 +78,13 @@ public class ContractServiceImpl implements ContractService {
         PageHelper.startPage(pageNum,pageSize);
         List<Contract> contractList = contractDao.findByDeptId(companyId,deptId);
         return new PageInfo<>(contractList);
+    }
+
+
+    //查询审查合同的用户
+    @Override
+    public List<User> findContractReviewUser() {
+        return contractDao.findContractReviewUser();
     }
    //删除货物
     @Override

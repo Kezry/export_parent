@@ -214,5 +214,42 @@ public class ExportServiceImpl implements ExportService {
         exportDao.deleteByPrimaryKey(id);
     }
 
+    /**
+     * 判断多个已报运合同的装运港(shipmentPort)、目的港(destinationPort)、收货人(consignee)是否一致
+     *
+     * @param ids 报运单id数组
+     * @return
+     */
+    @Override
+    public boolean isSameSDC(String[] ids) {
+        //获取查询出的SDCVo个数
+        int count = exportDao.getLSDCTVoByIds(ids).size();
+        if (count == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断每个报运单是否已经报运，已报运返回ture,否则返回false
+     *
+     * @param ids 报运单id数组
+     * @return
+     */
+    @Override
+    public boolean isExported(String[] ids) {
+        //根据id数组获取报运单集合
+        ExportExample exportExample = new ExportExample();
+        exportExample.createCriteria().andIdIn(Arrays.asList(ids));
+        List<Export> exports = exportDao.selectByExample(exportExample);
+        //遍历报运单
+        for (Export export : exports) {
+            if (export.getState() != 2) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

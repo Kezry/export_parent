@@ -14,5 +14,18 @@ public interface StatService {
     //根据小时统计访问次数
     List<Map<String,Object>> getOnlineData();
 
+    /**
+     * 按所在地统计指定生产类型的厂家数量
+     * @param ctype 厂家生产类型
+     * @return
+     */
+    List<Map<String,Object>> getAddressData(String ctype);
+
+    /**
+     * 获取所有厂家的地址
+     * @return
+     */
+    List<String> getAllAddress();
+
 }
 

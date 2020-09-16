@@ -14,19 +14,19 @@
         <!--配置过滤器规则（配置过滤器）-->
         <property name="filterChainDefinitions">
             <value>
-            <!--    /* 与/** 区别：
-                  /* :只能匹配一级目录
-                  /** : 可以匹配多级目录
+                <!--    /* 与/** 区别：
+                      /* :只能匹配一级目录
+                      /** : 可以匹配多级目录
 
-            注意：
-                1. css. jsw文件不应该需要登陆权限才能访问，应该直接放行
-                2. login.do 登录方法也应该要无条件放行，因为这是登录方法
-            -->
-                 /css/**=anon
-                 /img/**=anon
-                 /make/**=anon
-                 /plugins/**=anon
-                 /login.do=anon
+                注意：
+                    1. css. jsw文件不应该需要登陆权限才能访问，应该直接放行
+                    2. login.do 登录方法也应该要无条件放行，因为这是登录方法
+                -->
+                /css/**=anon
+                /img/**=anon
+                /make/**=anon
+                /plugins/**=anon
+                /login.do=anon
                 <!--/company/list.do=perms["企业管理"]
                 /system/user/list.do=perms["用户管理"]-->
                 /**=authc
@@ -37,13 +37,21 @@
         如果你没有登陆的情况下默认会跳转会/login.jsp-->
         <property name="loginUrl" value="/login.jsp"/>
         <!--配置一个权限不足的返回页面，配置权限不足页面只有配置文件的方式可以使用-->
-       <!-- <property name="unauthorizedUrl" value="/unauthorized.jsp"/>-->
+        <!-- <property name="unauthorizedUrl" value="/unauthorized.jsp"/>-->
     </bean>
 
+    <!--创建缓存管理-->
+    <!--cacheManager-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
 
-    <!--2.创建SecurityManager-->
+    <!--2.创建SecurityManager
+          将缓存管理放入
+    -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="realm"/>
+        <property name="cacheManager" ref="cacheManager"/>
     </bean>
 
 

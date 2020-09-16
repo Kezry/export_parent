@@ -32,6 +32,10 @@
         <result column="company_name" property="companyName" />
     </resultMap>
 
+    <resultMap id="UserMap" type="cn.itcast.domain.system.User">
+        <result column="user_name" property="userName"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, offeror, contract_no, signing_date, input_by, check_by, inspector, total_amount,
         crequest, custom_name, ship_time, import_num, delivery_period, old_state, out_state,
@@ -368,6 +372,13 @@
     <select id="findByDeptId" resultMap="BaseResultMap">
         SELECT * FROM co_contract c WHERE c.`company_id`= #{companyId}  AND  FIND_IN_SET(c.`create_dept`,getDeptChild(#{deptId}))
     </select>
+
+
+    <!--查询审查合同的用户-->
+    <select id="findContractReviewUser" resultMap="UserMap">
+        SELECT u.`user_name` FROM pe_user u INNER JOIN pe_role_user ru ON u.`user_id`=ru.`user_id` WHERE ru.`role_id`='4028a1cd4ee2d9d6014ee2df4c6a0009'
+    </select>
+
 
     <!--删除货物-->
     <delete id="deleteCargo">

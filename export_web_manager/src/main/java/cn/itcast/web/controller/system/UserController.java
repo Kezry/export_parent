@@ -7,6 +7,7 @@ import cn.itcast.service.system.DeptService;
 import cn.itcast.service.system.RoleService;
 import cn.itcast.service.system.UserService;
 import cn.itcast.web.controller.BaseController;
+import cn.itcast.web.shiro.AuthRealm;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -33,6 +34,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private DeptService deptService;
+
+    @Autowired
+    private AuthRealm authRealm;
 
     @RequestMapping("/list")
     @RequiresPermissions("用户管理")
@@ -73,6 +77,8 @@ public class UserController extends BaseController {
       */
     @RequestMapping("/edit")
     public  String edit(User user){
+        //清理缓存
+        authRealm.clearCache();
         //补全用户信息
         String companyId = getLoginCompanyId();
         String companyName = getLoginCompanyName();
@@ -101,6 +107,8 @@ public class UserController extends BaseController {
     */
     @RequestMapping("/toUpdate")
     public  String toUpdate(String id){
+        //清理缓存
+        authRealm.clearCache();
         //1.根据id查询当前用户信息
         User user = userService.findById(id);
 
@@ -126,6 +134,8 @@ public class UserController extends BaseController {
     @RequestMapping("/delete")
     @ResponseBody
     public  Map<String,Object> delete(String id){
+        //清理缓存
+        authRealm.clearCache();
         Map<String,Object> resultMap = new HashMap<>();
         boolean flag =  userService.delete(id);
         if(flag){
