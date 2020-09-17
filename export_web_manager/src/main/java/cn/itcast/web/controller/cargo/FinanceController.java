@@ -71,8 +71,6 @@ public class FinanceController extends BaseController {
      */
     @RequestMapping("/toAdd")
     public String toAdd(String invoiceId) {
-        System.out.println("==================");
-        System.out.println(invoiceId);
 
         /*
             发票金额  选择发票时候从发票中自动带过来
