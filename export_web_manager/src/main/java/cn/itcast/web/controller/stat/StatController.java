@@ -96,7 +96,7 @@ public class StatController extends BaseController {
         for (String address : addressList) {
             List list = new ArrayList();
             list.add(address);
-            for (int i = 0; i < productList.size(); i++){
+            for (int i = 0; i < productList.size(); i++) {
                 if (productList.get(i).get("name").equals(address)) {
                     list.add(productList.get(i).get("value"));
                     break;
@@ -106,7 +106,7 @@ public class StatController extends BaseController {
                 }
             }
 
-            for (int j = 0; j < extList.size(); j++){
+            for (int j = 0; j < extList.size(); j++) {
                 if (extList.get(j).get("name").equals(address)) {
                     list.add(extList.get(j).get("value"));
                     break;
