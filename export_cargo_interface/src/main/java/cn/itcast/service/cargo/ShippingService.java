@@ -31,6 +31,12 @@ public interface ShippingService {
     void save(Shipping shipping,String id);
 
     /**
+     * 更新委托单
+     * @param shipping
+     */
+    void update(Shipping shipping);
+
+    /**
      * 删除
      * @param id
      */

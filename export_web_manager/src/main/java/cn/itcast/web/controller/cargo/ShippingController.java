@@ -97,6 +97,18 @@ public class ShippingController extends BaseController {
         return state;
     }
 
+    /**
+     * 获取委托单状态
+     * @param id
+     * @return
+     */
+    @RequestMapping("/getShippingState")
+    @ResponseBody
+    public Integer getShippingState(String id){
+        Shipping shipping = shippingService.findById(id);
+        return shipping.getState();
+    }
+
 
     /**
      * 添加委托单

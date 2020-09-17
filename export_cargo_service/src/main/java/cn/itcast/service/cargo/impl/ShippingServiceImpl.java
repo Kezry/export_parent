@@ -57,6 +57,15 @@ public class ShippingServiceImpl implements ShippingService {
         packingDao.updateByPrimaryKeySelective(packing);
     }
 
+    /**
+     * 更新委托单
+     *
+     * @param shipping
+     */
+    @Override
+    public void update(Shipping shipping) {
+        shippingDao.updateByPrimaryKey(shipping);
+    }
 
     @Override
     public void delete(String id) {
