@@ -42,9 +42,9 @@
 
                     <div class="col-md-2 title">运输方式</div>
                     <div class="col-md-4 data">
-                        <div class="form-group form-inline">
-                            <div class="radio"><label><input type="radio" ${export.transportMode==SEA?'checked':''} name="orderType" value="SEA">海运</label></div>
-                            <div class="radio"><label><input type="radio" ${export.transportMode==AIR?'checked':''} name="orderType" value="AIR">空运</label></div>
+                        <div class="form-group form-inline"  >
+                            <div class="radio" style="display: ${export.transportMode=="SEA"?'':'none'} "><label><input type="radio" ${export.transportMode=="SEA"?'':'checked'} name="orderType"  value="SEA">海运</label></div>
+                            <div class="radio" style="display: ${export.transportMode!="SEA"?'':'none'} "><label><input type="radio" ${export.transportMode=="AIR"?'checked':''} name="orderType" value="AIR">空运</label></div>
                         </div>
                     </div>
 

@@ -23,30 +23,23 @@
         //判断是否选中
         let length = $("input[name=id]:checked").length;
         if (length == 0) {
-            alert("请勾选要删除的装箱单");
+            alert("请勾选要删除的委托单");
         } else {
-            //获取选中的报运单id(可能有多个)
-            let ids = new Array();
-            $("input[name=id]:checked").each(function () {
-                ids.push($(this).val());
-            });
+            var id = $("input[name=id]:checked").val();
+
             //异步请求
             $.ajax({
                 method: "get",
-                url: "/cargo/shipping/deleteBatch.do",
-                data: {"ids": ids},
+                url: "/cargo/shipping/createShipping.do?id="+id,
                 traditional: true,
-                dataType: "text",
-                success:function (result) {
-                    /*
-                        1 --> 删除成功
-                        0 --> 存在已委托单
-                     */
-                    if (result == "1") {
+                dataType: "json",
+                success:function (state) {
+                    if (state == 0) {
+                        location.href="/cargo/shipping/delete.do?id="+id;
                         alert("删除成功")
                         location.reload();
-                    }else if (result == "0") {
-                        alert("已经开票的委托单不能删除!")
+                    }else if (state == 1) {
+                        alert("已经上报的委托单不能删除!")
                     }
                 }
             });
