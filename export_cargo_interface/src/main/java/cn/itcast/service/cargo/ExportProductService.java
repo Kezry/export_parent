@@ -21,4 +21,11 @@ public interface ExportProductService {
 	void delete(String id);
 
 	PageInfo<ExportProduct> findByPage(ExportProductExample exportProductExample, int pageNum, int pageSize);
+
+	/**
+	 * 根据报运单id查询报运货物
+	 * @param exportId
+	 * @return
+	 */
+    List<ExportProduct> finByExportId(String exportId);
 }

@@ -63,8 +63,13 @@
                 </div>
 
                 <div class="col-md-2 title">运输方式</div>
-                <div class="col-md-4 data">
+                <%--<div class="col-md-4 data">
                     <input type="text" name="transportMode" class="form-control" placeholder="运输方式" value="${export.transportMode}">
+                </div>--%>
+                <div class="col-md-4 data">
+                <div class="form-group form-inline">
+                    <div class="radio"><label><input type="radio" ${export.transportMode==SEA?'checked':''} name="orderType" value="SEA">海运</label></div>
+                    <div class="radio"><label><input type="radio" ${export.transportMode==AIR?'checked':''} name="orderType" value="AIR">空运</label></div>
                 </div>
 
                 <div class="col-md-2 title">价格条件</div>

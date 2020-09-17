@@ -254,7 +254,7 @@ public class ExportController extends BaseController {
         response.setHeader("content-disposition","attachment;filename=export.pdf");
 
         //1. 找到模板的输入流
-        InputStream inputStream = session.getServletContext().getResourceAsStream("/jasper/export.jasper");
+        InputStream inputStream = session.getServletContext().getResourceAsStream("/jasper/orderTicket.jasper");
 
         //根据报运单id找到报运单
         Export export = exportService.findById(id);

@@ -19,9 +19,22 @@ public class ExportProductServiceImpl implements ExportProductService {
     @Autowired
     private ExportProductDao exportProductDao;
 
-    /*
-     报运商品分页
+    /**
+     * 根据报运单id查询报运货物
+     *
+     * @param exportId
+     * @return
      */
+    @Override
+    public List<ExportProduct> finByExportId(String exportId) {
+        ExportProductExample exportProductExample = new ExportProductExample();
+        exportProductExample.createCriteria().andExportIdEqualTo(exportId);
+        return exportProductDao.selectByExample(exportProductExample);
+    }
+
+    /*
+         报运商品分页
+         */
     @Override
     public PageInfo<ExportProduct> findByPage(ExportProductExample exportProductExample, int pageNum, int pageSize) {
         //设置开始页与页面大小

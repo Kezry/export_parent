@@ -19,60 +19,19 @@
     <script src="${ctx}/plugins/jQuery/jquery-2.2.3.min.js"></script>
 </head>
 <script>
-    function deleteBatch() {
-        //判断是否选中
+
+    function printExcel(){
         let length = $("input[name=id]:checked").length;
         if (length == 0) {
-            alert("请勾选要删除的装箱单");
+            alert("请勾选要导出excel的财务报运单");
         } else {
             //获取选中的报运单id(可能有多个)
             let ids = new Array();
             $("input[name=id]:checked").each(function () {
                 ids.push($(this).val());
             });
-            //异步请求
-            $.ajax({
-                method: "get",
-                url: "/cargo/packing/deleteBatch.do",
-                data: {"ids": ids},
-                traditional: true,
-                dataType: "text",
-                success:function (result) {
-                    /*
-                        1 --> 删除成功
-                        0 --> 存在已委托单
-                     */
-                    if (result == "1") {
-                        alert("删除成功")
-                        location.reload();
-                    }else if (result == "0") {
-                        alert("已经委托的装箱单不能删除!")
-                    }
-                }
-            });
-        }
-    }
-
-
-    function createEntrust(){
-        var id = getCheckId();
-        if (id!=null){
-            //location.href="/cargo/shipping/toAdd.do?id="+id;
-            $.ajax({
-                url:"/cargo/shipping/createPacking.do?id="+id,
-                type:"post",
-                data:"json",
-                success:function (state) {
-                    if (state==1){
-                        alert("装箱单已生成委托，不能再重复生成!")
-                    }else {
-                        location.href="/cargo/shipping/toAdd.do?id="+id;
-                    }
-                }
-            })
-
-        }else {
-            alert("请勾选待处理的记录，且每次只能勾选一个")
+            let idsStr = ids.join(",");
+            location.href = "/cargo/finance/printExcel.do?idsStr="+idsStr;
         }
     }
 
@@ -88,7 +47,7 @@
     <section class="content-header">
         <h1>
             货运管理
-            <small>装箱管理</small>
+            <small>财务管理</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
@@ -102,7 +61,7 @@
         <!-- .box-body -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">装箱管理列表</h3>
+                <h3 class="box-title">财务管理列表</h3>
             </div>
 
             <div class="box-body">
@@ -114,14 +73,13 @@
                     <div class="pull-left">
                         <div class="form-group form-inline">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default" title="刷新" onclick='window.location.reload()'><i
+                                <button type="button" class="btn btn-default" title="刷新"
+                                        onclick='window.location.reload()'><i
                                         class="fa  fa-eye-slash"></i> 刷新
                                 </button>
-                                <button type="button" class="btn btn-default" title="删除" onclick='deleteBatch()'><i
-                                        class="fa fa-trash-o"></i> 删除
-                                </button>
-                                <button type="button" class="btn btn-default" title="生成委托书" onclick='createEntrust()'><i
-                                        class="fa fa-trash-o"></i> 生成委托书
+
+                                <button type="button" class="btn btn-default" title="导出PDF" onclick='printExcel()'><i
+                                        class="fa fa-file-o"></i> 导出Excel
                                 </button>
                             </div>
                         </div>
@@ -141,34 +99,33 @@
                             <th class="" style="padding-right:0px;">
                                 <input type="checkbox" id="checkAll"/>
                             </th>
+
+                            <th class="sorting">财务单编号</th>
+                            <th class="sorting">制单时间</th>
+                            <th class="sorting">发票号</th>
+                            <th class="sorting">发票金额</th>
+                            <th class="sorting">发票时间</th>
                             <th class="sorting">报运合同号</th>
-                            <th class="sorting">总体积</th>
-                            <th class="sorting">总净重</th>
-                            <th class="sorting">总毛重</th>
-                            <th class="sorting">唛头</th>
-                            <th class="sorting">描述</th>
-                            <th class="sorting">装箱费用</th>
-                            <th class="sorting">装箱时间</th>
-                            <th class="sorting">状态</th>
+                            <th class="sorting">装运港</th>
+                            <th class="sorting">目的港</th>
+                            <th class="sorting">收货人</th>
+
 
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${pageInfo.list}" var="o" varStatus="status">
                             <tr>
-                                <td><input type="checkbox" name="id" value="${o.packingListId}"/></td>
+                                <td><input type="checkbox" name="id" value="${o.financeId}"/></td>
+                                <td>${o.financeId}</td>
+                                <td><fmt:formatDate value="${o.inputDate}" pattern="yyyy-MM-dd"/></td>
+                                <td>${o.invoiceId}</td>
+                                <td>${o.invoiceMoney}</td>
+                                <td><fmt:formatDate value="${o.invoiceTime}" pattern="yyyy-MM-dd"/></td>
                                 <td>${o.exportNos}</td>
-                                <td>${o.totalVolume}</td>
-                                <td>${o.netWeights}</td>
-                                <td>${o.grossWeights}</td>
-                                <td>${o.marks}</td>
-                                <td>${o.description}</td>
-                                <td>${o.packingMoney}</td>
-                                <td><fmt:formatDate value="${o.packingTime}" pattern="yyyy-MM-dd"/></td>
-                                <td>
-                                    <c:if test="${o.state==0}">草稿</c:if>
-                                    <c:if test="${o.state==1}"><font color="green">已委托</font></c:if>
-                                </td>
+                                <td>${o.shipmentPort}</td>
+                                <td>${o.destinationPort}</td>
+                                <td>${o.consignee}</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -188,7 +145,7 @@
             <!-- .box-footer-->
             <div class="box-footer">
                 <jsp:include page="../../common/page.jsp">
-                    <jsp:param value="/cargo/packing/list.do" name="pageUrl"/>
+                    <jsp:param value="/cargo/finance/list.do" name="pageUrl"/>
                 </jsp:include>
             </div>
             <!-- /.box-footer-->
